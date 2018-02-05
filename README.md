@@ -2,7 +2,7 @@
 calculates agrid and projects it through the brain.
 based on position of 3 or more guide tubes
 
-![](/mnt/.autofs/storage/gbw-s-neu01_fmri-monkey-03/PROJECT/John/code/surgery/gridFromGuideTubes/README_PNGs/gridOnly.png) 
+![](./README_PNGs/gridOnly.png) 
 
 ##file locations
 current working directory
@@ -85,16 +85,16 @@ makes grid image
 ##output
 grid calulated from guidetubes and projected into brain
 *_gridImage.nii
-![](/mnt/.autofs/storage/gbw-s-neu01_fmri-monkey-03/PROJECT/John/code/surgery/gridFromGuideTubes/README_PNGs/ReadMe_Images.008.png) 
+![](./README_PNGs/ReadMe_Images.008.png) 
 
 ## use grid number to find position
 use grid number from *_gridImage.nii 
 to find grid position in A-P and L-M 
 
-![](/mnt/.autofs/storage/gbw-s-neu01_fmri-monkey-03/PROJECT/John/code/surgery/gridFromGuideTubes/README_PNGs/ReadMe_Images.009.png) 
+![](./README_PNGs/ReadMe_Images.009.png) 
 
 converts number to grid position
 
 	findGridPos_fromVal(75);
 	
-![](/mnt/.autofs/storage/gbw-s-neu01_fmri-monkey-03/PROJECT/John/code/surgery/gridFromGuideTubes/README_PNGs/CommandLineMatlab.png) 
+![](./README_PNGs/CommandLineMatlab.png) 
