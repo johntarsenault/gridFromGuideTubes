@@ -46,9 +46,10 @@ function current_meanPoint_AP_LR = currentMeanPoint_transvSlice_weightedMean(gui
         for i = 1:size(current_points,1)
             val_per_point = [val_per_point anat.vol(current_points(i,1),current_points(i,2),current_points(i,3))];
         end
-        weighted_val = val_per_point/sum(val_per_point);
-        current_meanPoint_AP_LR(1,1) = sum(current_points(:,1).*weighted_val');
-        current_meanPoint_AP_LR(1,2) = sum(current_points(:,3).*weighted_val');
+        
+        [current_meanPoint_AP_LR(1,1) current_meanPoint_AP_LR(1,2) ] = findPeak_XY_from_polyFitOfGuideTube(guideTube_3D_indices{currentGuideTube}(current_transv_slice_indices,[1]),...
+        guideTube_3D_indices{currentGuideTube}(current_transv_slice_indices,[3]), val_per_point');
+
     else
         current_meanPoint_AP_LR = NaN;
     end

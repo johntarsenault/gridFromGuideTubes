@@ -2,13 +2,13 @@
 currDIR = '/data/fmri_monkey_03/PROJECT/codeshare/example/surgery/guideTube_outsideBrain_p2mm/';
 
 %specify location 
-imageLocation.guideTubeMask           = [currDIR,'/trajPoints_1to5_p2mm.nii'];
+imageLocation.guideTubeMask           = [currDIR,'/new_trajPoints_1to5_p2mm.nii'];
 imageLocation.anatomy                 = [currDIR,'/anat_p2mm.nii'];
 
 
 %definition of guide tube threshold and greater then  or less than
 guideTube.isGreaterThen   = 1;
-guideTube.threshold       = 500;
+guideTube.threshold       = 100;
 
 %find center of guide tube using the mean position weighted by voxel
 %intensity

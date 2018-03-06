@@ -21,7 +21,10 @@ guideTubeImage.vol   = zeros(size_X,size_Y,size_Z);
 for i = 1:length(guideTube_2D_indices)
             guideTubeImage.vol(guideTube_2D_indices{i}) = i;
 end
-MRIwrite(guideTubeImage,[imageLocation.anatomy(1:end-4),'_GT_noFlip.nii']);
+
+guideTubeImage.vol = reorientVol(guideTubeImage.vol,imageOrient.dimOrder,imageOrient.isFlipped);
+
+MRIwrite(guideTubeImage,[imageLocation.anatomy(1:end-4),'_GT.nii']);
 
 
 %step 4 - %find range of transverse points with a guide tube 
@@ -51,12 +54,21 @@ meanPoint_AP_LR = findMeanPoint_transvSlice(guideTube_3D_indices,guideTube_point
 %**calculating b for each slice
 [gridCenter] = findCenterPosition(gridpos,gridAPstep,gridLMstep,meanPoint_AP_LR,guideTube_points_transverse_range);
 
+
+%step 7b - create new guide tube 3D indicies cell array passed on the mean
+%position calculated in step 5
+clear new_guideTube_3D_indices
+for i = 1:size(meanPoint_AP_LR,2)
+new_guideTube_3D_indices{i} = [meanPoint_AP_LR(:,i,1) guideTube_points_transverse_range meanPoint_AP_LR(:,i,2)];
+new_guideTube_3D_indices{i}(isnan(new_guideTube_3D_indices{i}(:,1)),:) = [];
+end
+
 %step 8 - get average slope of all guidetubes
 for i = 1:length(guideTube_3D_indices)
-    [m_XY(i) m_ZY(i) b_XY(i) b_ZY(i)] = fit_guideTube_line_equation(guideTube_3D_indices{i});
+    [m_XY(i) m_ZY(i) b_XY(i) b_ZY(i)] = fit_guideTube_line_equation(new_guideTube_3D_indices{i});
 end
-mean_m_XY = mean(m_XY(i));
-mean_m_ZY = mean(m_ZY(i));
+mean_m_XY = mean(m_XY);
+mean_m_ZY = mean(m_ZY);
 
 %step 9 -load standard grid configuration
 load('standGrid.mat');

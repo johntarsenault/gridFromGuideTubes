@@ -13,7 +13,7 @@ addpath /fmri/apps/freesurfer-6.0.0/matlab/
 %read in images
 Anat = MRIread(Anat_imageName);
 
-Anat.vol = reorientVol(Anat.vol,imageOrient.dimOrder,imageOrient.flipVals);
+Anat.vol = reorientVol(Anat.vol,imageOrient.dimOrder,imageOrient.isFlipped);
 
 plotVolOrientation(Anat.vol);
 
