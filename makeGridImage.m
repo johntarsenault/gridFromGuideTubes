@@ -22,7 +22,8 @@ for i = 1:length(guideTube_2D_indices)
             guideTubeImage.vol(guideTube_2D_indices{i}) = i;
 end
 
-guideTubeImage.vol = reorientVol(guideTubeImage.vol,imageOrient.dimOrder,imageOrient.isFlipped);
+
+guideTubeImage.vol = reverse_reorientVol(guideTubeImage.vol,imageOrient.dimOrder,imageOrient.isFlipped);
 
 MRIwrite(guideTubeImage,[imageLocation.anatomy(1:end-4),'_GT.nii']);
 
@@ -89,7 +90,7 @@ gridImage.vol   = zeros(size_X,size_Y,size_Z);
 %each grid point has a unique value = 1:177
 %also flip image back to original orientation
 gridImage.vol(gridVoxels_voxValues(:,1)) = gridVoxels_voxValues(:,2);
-gridImage.vol = reorientVol(gridImage.vol,imageOrient.dimOrder,imageOrient.isFlipped);
+gridImage.vol = reverse_reorientVol(gridImage.vol,imageOrient.dimOrder,imageOrient.isFlipped);
 
 
 %step 13 -write out grid image
