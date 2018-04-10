@@ -11,7 +11,7 @@ for i = 1:size(meanPoint_AP_LR,3)
 end
 
 %initiliaze & open video object
-vid = VideoWriter( fullfile(printDir,['guidetube_position_estimate.avi']));
+vid = VideoWriter( fullfile(printDir,'grid',['guidetube_position_estimate.avi']));
 open(vid);
         
 %loop through slices
