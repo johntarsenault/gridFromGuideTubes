@@ -42,7 +42,7 @@ gridpos(5).positionNameLM = '7M';
 imageOrient.dimOrder = [1 3 2];
 
 %volume flips to perform [dorsal-ventral  anterior-posterior left-right]
-imageOrient.isFlipped = [1 1 1];
+imageOrient.isFlipped = [1 1 0];
 
 %%make sure volume in correct orientation
 %necessary for further calculations!

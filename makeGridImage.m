@@ -5,12 +5,12 @@ anat = MRIread(imageLocation.anatomy);
 guideTubeMask = MRIread(imageLocation.guideTubeMask);
 
 %step 1B - ensure that image is isotropic
-if ~isequal(anat.volres(1:end-1),anat.volres(2:end))
+if ~isequal(anat.volres(1:end-1), anat.volres(2:end))
     error('images need to be isotropic');
 end
 
 %step 1C - %get anatomy filename parts to write files later
-[anat_dir,anat_filename,anat_ext] = fileparts(imageLocation.anatomy);
+[anat_dir, anat_filename, anat_ext] = fileparts(imageLocation.anatomy);
 
 %step 2 - %reorient anatomy and guidetube
 anat.vol = reorientVol(anat.vol, imageOrient.dimOrder, imageOrient.isFlipped);
@@ -33,10 +33,10 @@ end
 guideTubeImage.vol = reverse_reorientVol(guideTubeImage.vol, imageOrient.dimOrder, imageOrient.isFlipped);
 
 %make grid dir if it doesn't exist
-if ~exist(fullfile(anat_dir,'grid'))
-    mkdir(fullfile(anat_dir,'grid'));
+if ~exist(fullfile(anat_dir, 'grid'))
+    mkdir(fullfile(anat_dir, 'grid'));
 end
-new_guideTubeImage_name = fullfile(anat_dir,'grid',[anat_filename(1:end-4), '_GT.nii']);
+new_guideTubeImage_name = fullfile(anat_dir, 'grid', [anat_filename, '_GT.nii']);
 MRIwrite(guideTubeImage, new_guideTubeImage_name);
 
 
@@ -94,7 +94,7 @@ gridInfo.gridCenter = gridCenter;
 gridInfo.m_XY = mean_m_XY;
 gridInfo.m_ZY = mean_m_ZY;
 
-mat_filename = fullfile(anat_dir,'grid',[anat_filename(1:end-4), '_grid_info.mat']);
+mat_filename = fullfile(anat_dir, 'grid', [anat_filename, '_grid_info.mat']);
 save(mat_filename, 'gridInfo');
 
 %step 10 -get the trajectory of every grid position
@@ -117,7 +117,7 @@ gridImage.vol = reverse_reorientVol(gridImage.vol, imageOrient.dimOrder, imageOr
 
 
 %step 13 -write out grid image
-new_gridImage_name =  fullfile(anat_dir,'grid',[anat_filename(1:end-4), '_gridImage.nii']);
+new_gridImage_name = fullfile(anat_dir, 'grid', [anat_filename, '_gridImage.nii']);
 MRIwrite(gridImage, new_gridImage_name);
 
 
