@@ -47,7 +47,6 @@ imageOrient.isFlipped = [1 1 1];
 %necessary for further calculations!
 checkVolOrientation(imageLocation.anatomy,imageOrient);
 
-
 %% calculate mean trajectories and positions and draw grid volume %%
 
 makeGridImage(imageLocation,imageOrient,guideTube,gridpos);
