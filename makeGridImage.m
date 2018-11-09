@@ -5,7 +5,7 @@ anat = MRIread(imageLocation.anatomy);
 guideTubeMask = MRIread(imageLocation.guideTubeMask);
 
 %step 1B - ensure that image is isotropic
-if ~isequal(anat.volres(1:end-1), anat.volres(2:end))
+if ~isequal(round(anat.volres(1:end-1),5), round(anat.volres(2:end),5))
     error('images need to be isotropic');
 end
 
