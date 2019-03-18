@@ -43,6 +43,11 @@ for i = 1:numel(guidetube_IDX)
     x_line = round(x_line);
     z_line = round(z_line);
     
+    if n_voxels == 0 % if n_voxels is 0 will not expand the line
+       line_IDX = sub2ind(sizeXYZ,x_line,y_line,z_line);
+       new_vol(line_IDX) = i;
+       
+    else
     %expand the size of the line
     expanded_line = surround_line_with_square(x_line,y_line,z_line,n_voxels);
     
@@ -50,6 +55,7 @@ for i = 1:numel(guidetube_IDX)
     for j = 1:numel(expanded_line)
         line_IDX = sub2ind(sizeXYZ,expanded_line{j}.x_line,expanded_line{j}.y_line,expanded_line{j}.z_line);
         new_vol(line_IDX) = i;
+    end
     end
 end
 

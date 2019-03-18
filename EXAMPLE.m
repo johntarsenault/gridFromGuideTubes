@@ -48,7 +48,7 @@ checkVolOrientation(imageLocation.anatomy,imageOrient);
 %% If sparse guide tube (defined only by start and end point) used
 % then fill line between points and dilate line using n_dilate_voxels
 if(sparseGT==1)
-    n_dilate_voxels = 5;
+    n_dilate_voxels = 5; % option: setting n_dilate_voxels to 0, no dilation
     imageLocation = fill_in_guidetube(imageLocation,imageOrient,n_dilate_voxels);
 end
 
