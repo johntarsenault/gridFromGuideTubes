@@ -1,4 +1,4 @@
-function findGridPos_fromVal(val)
+function find_grid_pos_from_val(val)
 
 %load the standard grid
 load('standGrid.mat');

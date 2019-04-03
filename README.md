@@ -1,18 +1,17 @@
-#gridFromGuideTubes
-calculates agrid and projects it through the brain.
+# gridFromGuideTubes
+calculates a grid and projects it through the brain.
 based on position of 3 or more guide tubes
 
 ![](./README_PNGs/gridOnly.png) 
 
-##file locations
-current working directory
-
-	currDIR = '/data/fmri_monkey_03/PROJECT/codeshare/example/surgery/guideTube_outsideBrain_p2mm/';
+## file locations
 
 specify location of guide tube mask and anatomy
 
-	guideTubeMask_imageName           = [currDIR,'/trajPoints_1to5_p2mm.nii'];
-	anat_imageName                    = [currDIR,'/anat_p2mm.nii'];
+	currDIR = '/data/location/here/';
+	imageLocation.guideTubeMask = [currDIR, '/mask.nii'];
+	imageLocation.anatomy = [currDIR, '/anat.nii'];
+
 
 
 ## specify guide tube voxel thresolds
@@ -21,15 +20,19 @@ specify location of guide tube mask and anatomy
 -voxels > threshold;  guideTube_greaterThen = 1
 -voxels < threshold; guideTube_greaterThen = 0
 
-	guideTube_greaterThen = 1;
+	guideTube.isGreaterThen = 1;
 	
 **guideTube_threshold** specify the threshold to be used to determine which voxels within the mask are guide tube voxels.
 
-	guideTube_threshold = 200;
+	guideTube.threshold = 200;
 
 find center of guide tube using the mean position weighted by voxel intensity
 
-	weightedMean = 1;
+	guideTube.isWeightedMean = 1;
+
+Is a sparse guide tube mask used?
+
+	guideTube.sparseGT = 0;
 
 ## Gride position definition
 definition of grid positions of each guide tube mask 
@@ -52,13 +55,13 @@ definition of grid positions of each guide tube mask
 	gridpos(5).positionNameAP = 'C';
 	gridpos(5).positionNameLM = '7M';
 
-define grid positions that are in the same:
--LM = lateral to medial line
--AP = same anterior to posterior line
+must be >= 2 grid positions per LM and AP axis :
+- LM = lateral to medial line
+- AP = same anterior to posterior line
 	gridpos_same_LM = [1 2 3];
 	gridpos_same_AP = [1 4 5];
 
-##Check that image orientation is the way the code likes it 
+##Check that image orientation is as expected 
 dimOrder change order of dimensions to  [1=Coronal, 2= Transverse, 3 = Sagittal]
 
 -example below flips the 2 and 3 dimensions
@@ -80,7 +83,7 @@ necessary for further calculations!
 ##execute
 makes grid image
 
-	makeGridImage(anat_imageName,guideTubeMask_imageName,dimOrder,flipVals,guideTube_greaterThen,guideTube_threshold,gridpos,gridpos_same_LM,gridpos_same_AP,weightedMean);
+	make_grid_image(imageLocation, imageOrient, guideTube, gridpos);
 
 ##output
 grid calulated from guidetubes and projected into brain

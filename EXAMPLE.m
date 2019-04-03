@@ -1,22 +1,27 @@
-%% input parameters %%
-currDIR = '/data/fmri_monkey_03/PROJECT/Marina/Wells_VVInjection/st04_secondHEM';
-sparseGT = 0;
-
-%specify location 
-imageLocation.guideTubeMask           = [currDIR,'/Jango181107_GT_RAS_up03_mask.nii'];
-imageLocation.anatomy                 = [currDIR,'/Jango181107_GT_RAS_up03.nii'];
+%% 1. specify image location
+currDIR = '/data/location/here/';
+imageLocation.guideTubeMask = [currDIR, '/mask.nii'];
+imageLocation.anatomy = [currDIR, '/anat.nii'];
 
 
-%definition of guide tube threshold and greater then  or less than
-guideTube.isGreaterThen   = 1;
-guideTube.threshold       = 10;
+%% 2. guide tube information 
+% definition of guide tube threshold and whether
+% greater then (hyperintense tube) or less than (hypointense tube)
+guideTube.isGreaterThen = 1;
+guideTube.threshold = 10;
 
-%find center of guide tube using the mean position weighted by voxel
-%intensity
+% find center of guide tube using the mean position weighted by voxel intensity
+% otherwise just use mean
 guideTube.isWeightedMean = 1;
 
-%definition of grid positions  for each mask in guideTubeMask_imageName
-%mask1 should indicate the pos gridpos 
+% Is a sparse guide tube mask used?
+guideTube.sparseGT = 0;
+
+
+%% 3. grid information
+% definition of grid positions of guidetubes as defined in  
+% imageLocation.guideTubeMask where numbers > 0 in mask define gridpos
+% imageLocation.guideTubeMask == 1 is equal to gridpos(1)
 clear gridpos
 gridpos(1).positionNameAP = 'C';
 gridpos(1).positionNameLM = 'C';
@@ -33,28 +38,31 @@ gridpos(4).positionNameLM = '7L';
 gridpos(5).positionNameAP = 'C';
 gridpos(5).positionNameLM = '7M';
 
-%% check volume is in correct orientation  %%
 
-%order of dimensions [Coronal Transverse Sagittal]
-imageOrient.dimOrder = [1 3 2];
+%% 4. check volume is in correct orientation 
+% order of dimensions [Coronal Transverse Sagittal]
+imageOrient.dimOrder = [1, 3, 2];
+% volume flips to perform [dorsal-ventral  anterior-posterior left-right]
+imageOrient.isFlipped = [1, 1, 0];
 
-%volume flips to perform [dorsal-ventral  anterior-posterior left-right]
-imageOrient.isFlipped = [1 1 0];
+% make sure volume in correct orientation
+% necessary for further calculations!
+checkVolOrientation(imageLocation.anatomy, imageOrient);
 
-%%make sure volume in correct orientation
-%necessary for further calculations!
-checkVolOrientation(imageLocation.anatomy,imageOrient);
-
-%% If sparse guide tube (defined only by start and end point) used
+%% 5. fill sparse guidtube
+% If sparse guide tube (defined only by start and end point) used
 % then fill line between points and dilate line using n_dilate_voxels
-if(sparseGT==1)
+% else just use guidetube
+if guideTube.sparseGT == 1
     n_dilate_voxels = 5; % option: setting n_dilate_voxels to 0, no dilation
-    imageLocation = fill_in_guidetube(imageLocation,imageOrient,n_dilate_voxels);
+    imageLocation = fill_in_guidetube(imageLocation, imageOrient, n_dilate_voxels);
 end
 
-%% calculate mean trajectories and positions and draw grid volume %%
-makeGridImage(imageLocation,imageOrient,guideTube,gridpos);
+%% 6. calculate mean trajectories and positions and draw grid volume
+make_grid_image(imageLocation, imageOrient, guideTube, gridpos);
 
+%% 7. Example find position
+% allows user to get anterior-posterior, medial-lateral position
+% from grid intensity of 
 
-%% get grid position from nifti output of makeGridImage %%
-findGridPos_fromVal(32);
+find_grid_pos_from_val(32);
