@@ -34,7 +34,7 @@ Is a sparse guide tube mask used?
 
 	guideTube.sparseGT = 0;
 
-## Gride position definition
+## grid position definition
 definition of grid positions of each guide tube mask 
 -mask with valune **n** in guideTubeMask_imageName
  should be speicifed with gridpos(**n**)
@@ -61,7 +61,7 @@ must be >= 2 grid positions per LM and AP axis :
 	gridpos_same_LM = [1 2 3];
 	gridpos_same_AP = [1 4 5];
 
-##Check that image orientation is as expected 
+## check image orientation 
 dimOrder change order of dimensions to  [1=Coronal, 2= Transverse, 3 = Sagittal]
 
 -example below flips the 2 and 3 dimensions
@@ -80,12 +80,12 @@ necessary for further calculations!
 
 	checkVolOrientation(Anat_imageName,dimOrder,flipVals);
 
-##execute
+## execute
 makes grid image
 
 	make_grid_image(imageLocation, imageOrient, guideTube, gridpos);
 
-##output
+## output
 grid calulated from guidetubes and projected into brain
 *_gridImage.nii
 ![](./README_PNGs/ReadMe_Images.008.png) 
